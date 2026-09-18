@@ -1,0 +1,9 @@
+import type { PastIncident } from '@/types/enrichment';
+
+export const pastIncidents: PastIncident[] = [
+  { id: 'INC-2025-001', title: 'Auth service 500 errors after deployment', date: '2025-12-15', summary: 'Spike in HTTP 500 errors from auth-service following v2.3.1 deployment.', cause: 'JWT validation endpoint URL changed in config but not updated in deployment manifest.', resolution: 'Rolled back to v2.3.0, then deployed v2.3.2 with corrected config.' },
+  { id: 'INC-2025-002', title: 'Database connection pool exhaustion', date: '2026-01-22', summary: 'Order service experienced timeout errors due to connection pool exhaustion.', cause: 'A new batch job was added without adjusting the connection pool max size.', resolution: 'Increased pool size from 20 to 50 and added connection timeout alerts.' },
+  { id: 'INC-2026-003-past', title: 'Memory leak in payment gateway', date: '2026-03-10', summary: 'Payment gateway pods OOMKilled repeatedly. Memory usage grew linearly over 4 hours.', cause: 'Unclosed HTTP client sessions in the retry logic path.', resolution: 'Fixed session lifecycle management, added memory usage metric alerts.' },
+  { id: 'INC-2026-004-past', title: 'Auth token revocation cascade failure', date: '2026-02-08', summary: 'Mass token revocation during security key rotation caused 40% of active sessions to fail.', cause: 'Token revocation service did not propagate invalidation events to all API gateway instances simultaneously.', resolution: 'Implemented synchronous cache invalidation broadcast via Redis pub/sub.' },
+  { id: 'INC-2026-005-past', title: 'Grafana alert silence misconfiguration', date: '2026-04-03', summary: 'A Grafana alert silence rule was accidentally set with a 7-day duration.', cause: 'SRE engineer created a maintenance silence with incorrect duration (7d instead of 7h).', resolution: 'Removed incorrect silence. Added silence duration limit of 24h.' },
+];

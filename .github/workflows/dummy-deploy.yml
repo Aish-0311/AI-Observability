@@ -1,0 +1,58 @@
+name: Dummy App - Build & Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ACR_NAME: aiobservabilityneu
+  IMAGE_NAME: dummy-target-app
+  CONTAINER_APP_NAME: ca-dummy-target
+  RESOURCE_GROUP: Ai-Observability
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Login to ACR
+        run: az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Build & Push image
+        working-directory: dummy-app
+        run: |
+          ACR_SERVER=$(az acr show --name ${{ env.ACR_NAME }} --query loginServer -o tsv)
+          docker build -t "${ACR_SERVER}/${{ env.IMAGE_NAME }}:${{ github.sha }}" \
+                       -t "${ACR_SERVER}/${{ env.IMAGE_NAME }}:latest" .
+          docker push "${ACR_SERVER}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          docker push "${ACR_SERVER}/${{ env.IMAGE_NAME }}:latest"
+
+      - name: Deploy to Container App
+        run: |
+          ACR_SERVER=$(az acr show --name ${{ env.ACR_NAME }} --query loginServer -o tsv)
+          az containerapp update \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image "${ACR_SERVER}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+
+      - name: Smoke test
+        run: |
+          APP_URL=$(az containerapp show \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "properties.configuration.ingress.fqdn" -o tsv)
+          echo "App URL: https://${APP_URL}"
+          sleep 15
+          curl -sf "https://${APP_URL}/health" || (echo "Smoke test failed" && exit 1)
+          echo "Smoke test passed!"

@@ -1,0 +1,91 @@
+name: Build & Deploy Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/backend/**"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_RESOURCE_GROUP: Ai-Observability
+  ACR_NAME: aiobservabilityneu
+  CONTAINER_APP_NAME: ai-obs-poc-backend
+  IMAGE_NAME: aiops-backend
+
+jobs:
+  # ---------------------------------------------------------------
+  # 1. Build & Push container image to ACR
+  # ---------------------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.meta.outputs.image-tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: ACR Login
+        run: az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Build & push image
+        id: meta
+        run: |
+          ACR_LOGIN_SERVER=$(az acr show --name "$ACR_NAME" --query loginServer -o tsv)
+          IMAGE_TAG="${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${{ github.sha }}"
+          docker build \
+            --file src/backend/Dockerfile \
+            --tag "$IMAGE_TAG" \
+            src/backend/
+          docker push "$IMAGE_TAG"
+          echo "image-tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
+  # ---------------------------------------------------------------
+  # 2. Deploy to Container App
+  # ---------------------------------------------------------------
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: production
+    outputs:
+      app-url: ${{ steps.deploy.outputs.app-url }}
+    steps:
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Deploy new revision
+        id: deploy
+        env:
+          APPLICATIONINSIGHTS_CONNECTIONSTRING: ${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
+        run: |
+            az containerapp update \
+                --name "${{ env.CONTAINER_APP_NAME }}" \
+                --resource-group "${{ env.AZURE_RESOURCE_GROUP }}" \
+                --image "${{ needs.build.outputs.image-tag }}" \
+                --set-env-vars APPLICATIONINSIGHTS_CONNECTIONSTRING="${APPLICATIONINSIGHTS_CONNECTIONSTRING}"
+
+            FQDN=$(az containerapp show \
+                --name "${{ env.CONTAINER_APP_NAME }}" \
+                --resource-group "${{ env.AZURE_RESOURCE_GROUP }}" \
+                --query "properties.configuration.ingress.fqdn" -o tsv)
+            echo "app-url=https://${FQDN}" >> "$GITHUB_OUTPUT"
+
+      - name: Print summary
+        run: |
+            echo "### Backend Deployed" >> "$GITHUB_STEP_SUMMARY"
+            echo "| | |" >> "$GITHUB_STEP_SUMMARY"
+            echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+            echo "| Image | \`${{ needs.build.outputs.image-tag }}\` |" >> "$GITHUB_STEP_SUMMARY"
+            echo "| URL   | ${{ steps.deploy.outputs.app-url }} |" >> "$GITHUB_STEP_SUMMARY"

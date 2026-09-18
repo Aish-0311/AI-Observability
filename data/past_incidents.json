@@ -1,0 +1,26 @@
+[
+  {
+    "id": "INC-2025-001",
+    "title": "Auth service 500 errors after deployment",
+    "date": "2025-12-15",
+    "summary": "Spike in HTTP 500 errors from auth-service following v2.3.1 deployment. Root cause was a misconfigured JWT validation endpoint.",
+    "cause": "JWT validation endpoint URL changed in config but not updated in deployment manifest.",
+    "resolution": "Rolled back to v2.3.0, then deployed v2.3.2 with corrected config."
+  },
+  {
+    "id": "INC-2025-002",
+    "title": "Database connection pool exhaustion",
+    "date": "2026-01-22",
+    "summary": "Order service experienced timeout errors due to connection pool exhaustion on the primary SQL database.",
+    "cause": "A new batch job was added without adjusting the connection pool max size, leading to starvation under load.",
+    "resolution": "Increased pool size from 20 to 50 and added connection timeout alerts."
+  },
+  {
+    "id": "INC-2026-003",
+    "title": "Memory leak in payment gateway",
+    "date": "2026-03-10",
+    "summary": "Payment gateway pods OOMKilled repeatedly. Memory usage grew linearly over 4 hours.",
+    "cause": "Unclosed HTTP client sessions in the retry logic path. Each failed retry created a new session without closing the previous one.",
+    "resolution": "Fixed session lifecycle management, added memory usage metric alerts."
+  }
+]

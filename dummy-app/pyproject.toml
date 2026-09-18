@@ -1,0 +1,21 @@
+[project]
+name = "dummy-target-app"
+version = "0.1.0"
+description = "Dummy app instrumented with App Insights for testing the AI observability platform"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.32,<1",
+    "azure-monitor-opentelemetry>=1.6,<2",
+    "opentelemetry-instrumentation-fastapi>=0.48b0",
+    "httpx>=0.28,<1",
+]
+
+[project.optional-dependencies]
+loadtest = [
+    "locust>=2.29,<3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

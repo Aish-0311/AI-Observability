@@ -1,0 +1,7 @@
+resource_group_name        = "Ai-Observability"
+location                   = "swedencentral"
+base_name                  = "ai-obs-poc"
+log_analytics_workspace_id = "YOUR-WORKSPACE-GUID"
+github_repo                = "owner/repo"
+# github_token             = set via TF_VAR_github_token or -var flag
+# frontend_container_image = "aiobservabilityneu.azurecr.io/aiops-frontend:latest"

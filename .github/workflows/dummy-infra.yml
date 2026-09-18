@@ -1,0 +1,57 @@
+name: Dummy App - Infrastructure
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_RESOURCE_GROUP: Ai-Observability
+  AZURE_LOCATION: swedencentral
+  ACR_NAME: aiobservabilityneu
+  TF_WORKING_DIR: dummy-app/infra
+
+jobs:
+  deploy-infra:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TF_WORKING_DIR }}
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_USE_OIDC: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: |
+          terraform plan -no-color -out=tfplan \
+            -var="resource_group_name=${{ env.AZURE_RESOURCE_GROUP }}" \
+            -var="location=${{ env.AZURE_LOCATION }}" \
+            -var="acr_name=${{ env.ACR_NAME }}"
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+
+      - name: Show outputs
+        id: outputs
+        run: |
+          echo "dummy_app_url=$(terraform output -raw dummy_app_url)" >> "$GITHUB_OUTPUT"
+          echo "log_analytics_workspace_id=$(terraform output -raw log_analytics_workspace_id)" >> "$GITHUB_OUTPUT"

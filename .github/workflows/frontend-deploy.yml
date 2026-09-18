@@ -1,0 +1,118 @@
+name: Build & Deploy Frontend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/frontend/**"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_RESOURCE_GROUP: Ai-Observability
+  ACR_NAME: aiobservabilityneu
+  CONTAINER_APP_NAME: ai-obs-poc-frontend
+  IMAGE_NAME: aiops-frontend
+
+jobs:
+  # ---------------------------------------------------------------
+  # 1. Build & Push container image to ACR
+  # ---------------------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.meta.outputs.image-tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: ACR Login
+        run: az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Build & push image
+        id: meta
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          VITE_APPINSIGHTS_CONNECTIONSTRING: ${{ secrets.VITE_APPINSIGHTS_CONNECTION_STRING }}
+        run: |
+          ACR_LOGIN_SERVER=$(az acr show --name "$ACR_NAME" --query loginServer -o tsv)
+          IMAGE_TAG="${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${{ github.sha }}"
+          docker build \
+            --file src/frontend/Dockerfile \
+            --build-arg VITE_API_BASE_URL="${VITE_API_BASE_URL}" \
+            --build-arg VITE_APPINSIGHTS_CONNECTIONSTRING="${VITE_APPINSIGHTS_CONNECTION_STRING}" \
+            --tag "$IMAGE_TAG" \
+            src/frontend/
+          docker push "$IMAGE_TAG"
+          echo "image-tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
+
+  # ---------------------------------------------------------------
+  # 2. Deploy to Container App
+  # ---------------------------------------------------------------
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: production
+    outputs:
+      app-url: ${{ steps.deploy.outputs.app-url }}
+    steps:
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy new revision
+        id: deploy
+        run: |
+          az containerapp update \
+            --name "${{ env.CONTAINER_APP_NAME }}" \
+            --resource-group "${{ env.AZURE_RESOURCE_GROUP }}" \
+            --image "${{ needs.build.outputs.image-tag }}"
+
+          FQDN=$(az containerapp show \
+            --name "${{ env.CONTAINER_APP_NAME }}" \
+            --resource-group "${{ env.AZURE_RESOURCE_GROUP }}" \
+            --query "properties.configuration.ingress.fqdn" -o tsv)
+          echo "app-url=https://${FQDN}" >> "$GITHUB_OUTPUT"
+
+      - name: Print summary
+        run: |
+          echo "### Frontend Deployed" >> "$GITHUB_STEP_SUMMARY"
+          echo "| | |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Image | \`${{ needs.build.outputs.image-tag }}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| URL   | ${{ steps.deploy.outputs.app-url }} |" >> "$GITHUB_STEP_SUMMARY"
+
+  # ---------------------------------------------------------------
+  # 3. Smoke test
+  # ---------------------------------------------------------------
+  smoke-test:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Health check
+        run: |
+          APP_URL="${{ needs.deploy.outputs.app-url }}"
+          echo "Testing $APP_URL/healthz ..."
+          for i in $(seq 1 10); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL/healthz" || true)
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check passed!"
+              exit 0
+            fi
+            echo "Attempt $i: got $STATUS, retrying in 15s..."
+            sleep 15
+          done
+          echo "Health check failed after 10 attempts"
+          exit 1

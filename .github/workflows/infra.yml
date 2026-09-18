@@ -1,0 +1,164 @@
+name: Infrastructure for Obervability
+
+on:
+    push:
+      branches: [main]
+      paths:
+        - "infra/**"
+#   pull_request:
+#     branches: [main]
+#     paths:
+#       - "infra/**"
+    workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  AZURE_RESOURCE_GROUP: Ai-Observability
+  AZURE_LOCATION: swedencentral
+  BASE_NAME: ai-obs-poc
+  ACR_NAME: aiobservabilityneu
+  TF_WORKING_DIR: infra
+
+jobs:
+  # ---------------------------------------------------------------
+  # Terraform Plan (runs on PRs and pushes)
+  # ---------------------------------------------------------------
+  plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TF_WORKING_DIR }}
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_USE_OIDC: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Bootstrap Terraform State Storage
+        run: |
+          # Create storage account for TF state if it doesn't exist
+          if ! az storage account show --name tfstatepocobservability --resource-group ${{ env.AZURE_RESOURCE_GROUP }} &>/dev/null; then
+            az storage account create \
+              --name tfstatepocobservability \
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+              --location ${{ env.AZURE_LOCATION }} \
+              --sku Standard_LRS \
+              --allow-blob-public-access false
+            az storage container create \
+              --name tfstate \
+              --account-name tfstatepocobservability \
+              --auth-mode login
+          fi
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan -no-color -out=tfplan \
+            -var="resource_group_name=${{ env.AZURE_RESOURCE_GROUP }}" \
+            -var="location=${{ env.AZURE_LOCATION }}" \
+            -var="base_name=${{ env.BASE_NAME }}" \
+            -var="acr_name=${{ env.ACR_NAME }}" \
+            -var="log_analytics_workspace_id=${{ secrets.LOG_ANALYTICS_WORKSPACE_ID }}" \
+            -var="github_repo=${{ github.repository }}" \
+            -var="github_token=${{ secrets.APP_GITHUB_TOKEN }}"
+
+      - name: Comment plan on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = `#### Terraform Plan 📖
+            \`\`\`
+            ${{ steps.plan.outputs.stdout }}
+            \`\`\`
+            *Triggered by @${{ github.actor }} on \`${{ github.event_name }}\`*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output.substring(0, 65536)
+            });
+
+      - name: Upload plan artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: ${{ env.TF_WORKING_DIR }}/tfplan
+          retention-days: 1
+
+  # ---------------------------------------------------------------
+  # Terraform Apply (only on main push)
+  # ---------------------------------------------------------------
+  apply:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    needs: plan
+    environment: production
+    defaults:
+      run:
+        working-directory: ${{ env.TF_WORKING_DIR }}
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_USE_OIDC: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Download plan artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: ${{ env.TF_WORKING_DIR }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+
+      - name: Print outputs
+        run: |
+          echo "### Terraform Outputs" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Output | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|--------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| App URL | $(terraform output -raw container_app_url) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Frontend URL | $(terraform output -raw frontend_container_app_url) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| OpenAI Endpoint | $(terraform output -raw openai_endpoint) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| ACR | $(terraform output -raw acr_login_server) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Identity | $(terraform output -raw identity_client_id) |" >> "$GITHUB_STEP_SUMMARY"

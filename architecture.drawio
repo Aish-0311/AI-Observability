@@ -1,0 +1,279 @@
+<mxfile host="65bd71144e">
+    <diagram id="ai-observability-architecture" name="Architecture">
+        <mxGraphModel dx="1668" dy="1139" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1600" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="AI Observability Platform — Multi-Source Architecture" style="text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="20" width="900" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="subtitle" value="Data Correlation · Cost Tracking · Hallucination Safeguards" style="text;html=1;fontSize=13;fontStyle=2;align=center;verticalAlign=middle;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#888888;" parent="1" vertex="1">
+                    <mxGeometry x="550" y="55" width="800" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="azure-cloud" value="Azure Cloud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#0078D4;strokeWidth=2;dashed=1;fontSize=14;fontStyle=1;fontColor=#0078D4;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;arcSize=6;" parent="1" vertex="1">
+                    <mxGeometry x="115" y="100" width="1920" height="1470" as="geometry"/>
+                </mxCell>
+                <mxCell id="ds-boundary" value="Data Sources (Producers)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#E65100;strokeWidth=2;dashed=1;fontSize=13;fontStyle=1;fontColor=#E65100;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;arcSize=8;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="120" width="300" height="710" as="geometry"/>
+                </mxCell>
+                <mxCell id="ds-azmon" value="&lt;b&gt;Azure Monitor&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Alert Rules&lt;br&gt;Metric Alerts&lt;br&gt;Log-based Alerts&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;fontColor=#FFFFFF;strokeColor=#005A9E;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="160" width="250" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="ds-appins" value="&lt;b&gt;Application Insights&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Traces · Availability Tests&lt;br&gt;Performance Counters&lt;br&gt;End-to-End Transactions&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;fontColor=#FFFFFF;strokeColor=#005A9E;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="250" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ds-prometheus" value="&lt;b&gt;Prometheus&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;PromQL Range/Instant&lt;br&gt;HTTP 5xx · CPU · Memory&lt;br&gt;Service Health&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6522C;fontColor=#FFFFFF;strokeColor=#C43E1C;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="450" width="250" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="ds-grafana" value="&lt;b&gt;Grafana&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Annotations · Firing Alerts&lt;br&gt;Dashboard Context&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2CC0C;fontColor=#333333;strokeColor=#E0B800;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="545" width="250" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="ds-infra" value="&lt;b&gt;Infrastructure Sources&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;AKS · VMs · Functions&lt;br&gt;APIs · Databases&lt;br&gt;(emit logs/metrics/traces)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="630" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="action-group" value="&lt;b&gt;Action Group&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Webhook Receiver&lt;br&gt;Common Alert Schema&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F2FF;strokeColor=#0078D4;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="115" y="740" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-infra-azmon" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#424242;strokeWidth=1;dashed=1;" parent="1" source="ds-infra" target="ds-azmon" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="70" y="670"/>
+                            <mxPoint x="70" y="195"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="cae" value="Azure Container App Environment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#50E6FF;strokeWidth=2;dashed=1;fontSize=13;fontStyle=1;fontColor=#0078D4;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;arcSize=8;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="110" width="1100" height="1420" as="geometry"/>
+                </mxCell>
+                <mxCell id="container-app" value="&lt;b&gt;Container App&lt;/b&gt;&lt;font style=&quot;font-size:10px&quot;&gt; — Python 3.12 · Uvicorn · 0.5 CPU · 1Gi · Scale 0–3&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#43A047;strokeWidth=2;fontSize=12;shadow=1;verticalAlign=top;spacingTop=5;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="140" width="1040" height="1360" as="geometry"/>
+                </mxCell>
+                <mxCell id="api-layer" value="API Layer — FastAPI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FF6D00;strokeWidth=1;dashed=1;fontSize=12;fontStyle=1;fontColor=#FF6D00;verticalAlign=top;align=left;spacingLeft=10;spacingTop=3;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="175" width="980" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="endpoint-webhook" value="&lt;b&gt;POST /webhook/alert&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Azure Monitor Common Alert Schema&lt;br&gt;Returns 202 · Async background&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF6D00;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="205" width="250" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="endpoint-health" value="&lt;b&gt;GET /health&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF6D00;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="215" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="endpoint-root" value="&lt;b&gt;GET /&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FF6D00;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="215" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-ag-webhook" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#FF6D00;strokeWidth=2;" parent="1" source="action-group" target="endpoint-webhook" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="380" y="770"/>
+                            <mxPoint x="380" y="237"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-ag-webhook-label" value="POST webhook" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#666666;" parent="edge-ag-webhook" vertex="1" connectable="0">
+                    <mxGeometry x="-0.1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="correlation-box" value="&lt;b&gt;Correlation Context&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;correlation_id · service_name · environment&lt;br&gt;Shared across all signals for cross-source joining&lt;/font&gt;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#E1F5FE;strokeColor=#0288D1;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="300" width="350" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="pipeline-layer" value="Orchestration — LangGraph State Machine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#7B1FA2;strokeWidth=2;dashed=1;fontSize=12;fontStyle=1;fontColor=#7B1FA2;verticalAlign=top;align=left;spacingLeft=10;spacingTop=3;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="380" width="980" height="370" as="geometry"/>
+                </mxCell>
+                <mxCell id="agent-signal" value="&lt;b&gt;1. Signal Aggregator&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Parse alert · Build correlation ctx&lt;br&gt;Query ALL sources (±5 min)&lt;br&gt;Track query cost&lt;br&gt;&lt;b&gt;Sources:&lt;/b&gt; Azure Monitor, App Insights,&lt;br&gt;Log Analytics, Prometheus, Grafana&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;strokeWidth=2;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="440" width="210" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="agent-rca" value="&lt;b&gt;2. Root Cause Analyzer&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;GPT-4o with JSON schema&lt;br&gt;✅ Evidence required per claim&lt;br&gt;✅ Confidence 0–1&lt;br&gt;✅ Reasoning chain&lt;br&gt;✅ Alternative hypotheses&lt;br&gt;✅ Hallucination disclaimer&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;strokeWidth=2;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="580" width="210" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="agent-error" value="&lt;b&gt;Error Handler&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Fallback RCA&lt;br&gt;confidence=0.0&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E53935;strokeWidth=1;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="860" y="485" width="140" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="agent-issue" value="&lt;b&gt;4. GitHub Issue Creator&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Markdown report with:&lt;br&gt;• Evidence section&lt;br&gt;• Reasoning chain&lt;br&gt;• Hallucination disclaimer&lt;br&gt;• Cost estimate&lt;br&gt;• Multi-source signals&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;strokeWidth=2;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1210" y="580" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-wh-sig" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#7B1FA2;strokeWidth=2;" parent="1" source="endpoint-webhook" target="agent-signal" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-wh-sig-label" value="BackgroundTask" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#7B1FA2;" parent="edge-wh-sig" vertex="1" connectable="0">
+                    <mxGeometry x="-0.1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-sig-rca" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#7B1FA2;strokeWidth=2;" parent="1" source="agent-signal" target="agent-rca" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-rca-enrich" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#43A047;strokeWidth=2;" parent="1" source="agent-rca" target="agent-enrich" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-rca-enrich-label" value="success" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#43A047;fontStyle=2;" parent="edge-rca-enrich" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-rca-error" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E53935;strokeWidth=2;dashed=1;" parent="1" source="agent-rca" target="agent-error" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="770" y="640"/>
+                            <mxPoint x="770" y="513"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-rca-error-label" value="failure" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=9;fontColor=#E53935;fontStyle=2;" parent="edge-rca-error" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-enrich-issue" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#7B1FA2;strokeWidth=2;" parent="1" source="agent-enrich" target="agent-issue" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="state-model" value="&lt;b&gt;Pipeline State (TypedDict)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;AlertPayload · CorrelationContext&lt;br&gt;CorrelatedSignals · QueryCostEstimate&lt;br&gt;RootCauseAnalysis (+ Evidence[]) · EnrichmentContext&lt;br&gt;github_issue_url · error&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="770" width="360" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cost-box" value="&lt;b&gt;💰 Cost Tracker&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;KQL queries × $2.76/GB&lt;br&gt;Metrics API calls&lt;br&gt;Prometheus queries&lt;br&gt;Grafana API calls&lt;br&gt;Estimated USD per incident&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="860" y="770" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hallucination-box" value="&lt;b&gt;🛡️ Hallucination Safeguards&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;• JSON schema enforces evidence[]&lt;br&gt;• confidence &lt; 0.3 = insufficient data&lt;br&gt;• reasoning_chain required&lt;br&gt;• alternative_hypotheses required&lt;br&gt;• hallucination_disclaimer mandatory&lt;br&gt;• Post-LLM validation pass&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="770" width="250" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="services-layer" value="Services Layer — External Integrations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#00838F;strokeWidth=1;dashed=1;fontSize=12;fontStyle=1;fontColor=#00838F;verticalAlign=top;align=left;spacingLeft=10;spacingTop=3;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="910" width="980" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-monitor" value="&lt;b&gt;azure_monitor.py&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;LogsQueryClient&lt;br&gt;MetricsQueryClient&lt;br&gt;KQL Queries&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00838F;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="945" width="145" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-appins" value="&lt;b&gt;app_insights.py&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Traces · Availability&lt;br&gt;E2E Transactions&lt;br&gt;Perf Counters&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00838F;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="645" y="945" width="145" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-prometheus" value="&lt;b&gt;prometheus.py&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;PromQL range/instant&lt;br&gt;Default metric queries&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00838F;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="810" y="945" width="145" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-grafana" value="&lt;b&gt;grafana.py&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Annotations API&lt;br&gt;Alert Rules API&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00838F;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="975" y="945" width="145" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-openai" value="&lt;b&gt;azure_openai.py&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;AzureOpenAI Client&lt;br&gt;Structured JSON Output&lt;br&gt;Evidence Schema&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00838F;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1140" y="945" width="145" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc-github" value="&lt;b&gt;github_client.py&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;PyGithub&lt;br&gt;Issues · Commits&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00838F;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1305" y="945" width="120" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="ext-openai" value="&lt;b&gt;Azure OpenAI&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;GPT-4o · Structured JSON&lt;br&gt;Evidence schema enforced&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1510" y="600" width="200" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-svcoai-ext" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#0078D4;strokeWidth=2;" parent="1" source="svc-openai" target="ext-openai" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1213" y="1040"/>
+                            <mxPoint x="1620" y="1040"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ext-github" value="&lt;b&gt;GitHub&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Issues API · Commits API&lt;br&gt;PAT Auth&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1720" y="600" width="200" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-svcgh-ext" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#24292E;strokeWidth=2;" parent="1" source="svc-github" target="ext-github" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="config-box" value="&lt;b&gt;config.py&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Pydantic BaseSettings&lt;br&gt;Azure · Prometheus · Grafana · GitHub&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="1080" width="240" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="data-store" value="&lt;b&gt;past_incidents.json&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Local knowledge base&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="1070" y="410" width="150" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-enrich-data" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#F9A825;strokeWidth=1;dashed=1;" parent="1" source="agent-enrich" target="data-store" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1145" y="640"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="managed-identity" value="&lt;b&gt;User-Assigned&lt;br&gt;Managed Identity&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;DefaultAzureCredential&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;fontColor=#FFFFFF;strokeColor=#005A9E;fontSize=10;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="1100" width="160" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbac" value="&lt;b&gt;RBAC Roles&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;• Cognitive Services OpenAI User&lt;br&gt;• Monitoring Reader&lt;br&gt;• Log Analytics Reader&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=10;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="680" y="1095" width="220" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-id-rbac" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#1565C0;strokeWidth=1;" parent="1" source="managed-identity" target="rbac" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="terraform" value="&lt;b&gt;Terraform IaC&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;azurerm ~4.0 · azapi ~2.0&lt;br&gt;Container App · OpenAI · Identity · RBAC&lt;/font&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#F5F5F5;strokeColor=#616161;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="1200" width="310" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#BDBDBD;strokeWidth=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="1560" y="120" width="320" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-title" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;fontSize=12;fontStyle=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="125" width="100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;strokeColor=#005A9E;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="155" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg1t" value="Azure Services (Monitor, App Insights, LA)" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="150" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6522C;strokeColor=#C43E1C;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="180" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg2t" value="Prometheus" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="175" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2CC0C;strokeColor=#E0B800;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="205" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg3t" value="Grafana" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="200" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="230" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg4t" value="LangGraph Agent Nodes" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="225" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg5" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F7FA;strokeColor=#00838F;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="255" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg5t" value="Service Clients" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="250" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="280" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg6t" value="💰 Cost Tracking" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="275" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg7" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="305" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg7t" value="🛡️ Hallucination Safeguards" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="300" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg8" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0288D1;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="330" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg8t" value="🔗 Correlation Context" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="325" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg9" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E53935;" parent="1" vertex="1">
+                    <mxGeometry x="1575" y="355" width="20" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg9t" value="Error / Fallback Path" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1605" y="350" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="ds-loganalytics" value="&lt;b&gt;Log Analytics&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;KQL Queries · Exceptions&lt;br&gt;Failed Requests · Dependencies&lt;br&gt;💰 ~$2.76/GB scanned&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0078D4;fontColor=#FFFFFF;strokeColor=#005A9E;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="85" y="350" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#00838F;strokeWidth=1;dashed=1;" parent="1" source="agent-rca" target="agent-enrich" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="720" y="640" as="sourcePoint"/>
+                        <mxPoint x="1213" y="945" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="agent-enrich" value="&lt;b&gt;3. Knowledge Enricher&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Match past incidents&lt;br&gt;Fetch recent commits (24h)&lt;br&gt;Identify suspect commits (1h)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;strokeWidth=2;fontSize=11;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="595" width="200" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.463;entryY=0.017;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;strokeColor=#FF0B0B;" parent="1" source="agent-error" target="agent-issue" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

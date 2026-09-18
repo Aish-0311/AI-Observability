@@ -1,0 +1,475 @@
+{
+  "version": 1,
+  "lastAutoIncrementId": 7,
+  "incidents": [
+    {
+      "id": "CARIAD-2026-001",
+      "deduplicationKey": "test-availabilityTest-test-applicationInsights#/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.insights/components/test-applicationInsights",
+      "alertRule": "test-availabilityTest-test-applicationInsights",
+      "severity": "Sev4",
+      "resourceId": "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.insights/components/test-applicationInsights",
+      "resourceName": "test-applicationInsights",
+      "operationName": "unknown",
+      "description": "unknown",
+      "originalFiredDateTime": "2026-06-10T13:21:23.173Z",
+      "lastReceivedDateTime": "2026-06-10T13:26:21.1858639Z",
+      "receivedCount": 2,
+      "rawPayload": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+          "essentials": {
+            "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/12345678-1234-1234-1234-1234567890ab",
+            "alertRule": "test-availabilityTest-test-applicationInsights",
+            "severity": "Sev4",
+            "signalType": "Metric",
+            "monitorCondition": "Fired",
+            "monitoringService": "Platform",
+            "alertTargetIDs": [
+              "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.insights/components/test-applicationInsights"
+            ],
+            "configurationItems": [
+              "test-applicationInsights"
+            ],
+            "originAlertId": "11111111-1111-1111-1111-111111111111_test-RG_microsoft.insights_metricalerts_test-availabilityTest-test-applicationInsights_1234567890",
+            "firedDateTime": "2026-06-10T13:26:33.8Z",
+            "description": "Alert rule description",
+            "essentialsVersion": "1.0",
+            "alertContextVersion": "1.0"
+          },
+          "alertContext": {
+            "properties": null,
+            "conditionType": "WebtestLocationAvailabilityCriteria",
+            "condition": {
+              "windowSize": "PT5M",
+              "allOf": [
+                {
+                  "metricName": "Failed Location",
+                  "metricNamespace": null,
+                  "operator": "GreaterThan",
+                  "threshold": "2",
+                  "timeAggregation": "Sum",
+                  "dimensions": [],
+                  "metricValue": 5.0,
+                  "webTestName": "test-availabilityTest-test-applicationInsights"
+                }
+              ],
+              "windowStartTime": "2026-06-10T13:26:33.8Z",
+              "windowEndTime": "2026-06-10T13:26:33.8Z"
+            }
+          },
+          "customProperties": {
+            "customKey1": "value1",
+            "customKey2": "value2"
+          }
+        }
+      },
+      "caller": null
+    },
+    {
+      "id": "CARIAD-2026-002",
+      "deduplicationKey": "unknown#unknown",
+      "alertRule": "unknown",
+      "severity": "Sev4",
+      "resourceId": "unknown",
+      "resourceName": "unknown",
+      "operationName": "unknown",
+      "description": "unknown",
+      "originalFiredDateTime": "2026-06-10T13:35:18.285Z",
+      "lastReceivedDateTime": "2026-06-10T13:35:07.5384953Z",
+      "receivedCount": 1,
+      "rawPayload": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+          "essentials": {
+            "monitoringService": "CostAlerts",
+            "firedDateTime": "2026-06-10T13:35:18.285Z",
+            "description": "Delivery Confirmation: This is a sample budget alert from Azure Monitor Action Groups.",
+            "essentialsVersion": "1.0",
+            "alertContextVersion": "1.0",
+            "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.CostManagement/alerts/Test_Alert",
+            "alertRule": null,
+            "severity": null,
+            "signalType": null,
+            "monitorCondition": "Fired",
+            "alertTargetIDs": null,
+            "configurationItems": [
+              "budgets"
+            ],
+            "originAlertId": null
+          },
+          "alertContext": {
+            "AlertCategory": "budgets",
+            "AlertData": {
+              "Scope": "/subscriptions/11111111-1111-1111-1111-111111111111/",
+              "ThresholdType": "Forecasted",
+              "BudgetType": "Cost",
+              "BudgetThreshold": "$50.00",
+              "NotificationThresholdAmount": "$50.00",
+              "BudgetName": "Test_forcasted_budget",
+              "BudgetId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.Consumption/budgets/Test_forcasted_budget",
+              "BudgetStartDate": "2022-11-01",
+              "BudgetCreator": "test@sample.test",
+              "Unit": "USD",
+              "SpentAmount": "$999.99",
+              "ForecastedTotalForPeriod": "$1111.11"
+            }
+          }
+        }
+      },
+      "caller": null
+    },
+    {
+      "id": "CARIAD-2026-003",
+      "deduplicationKey": "test-ResourceHealthAlertRule#/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.compute/virtualmachines/test-VM",
+      "alertRule": "test-ResourceHealthAlertRule",
+      "severity": "Sev4",
+      "resourceId": "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.compute/virtualmachines/test-VM",
+      "resourceName": "test-VM",
+      "operationName": "Microsoft.Resourcehealth/healthevent/Activated/action",
+      "description": "unknown",
+      "originalFiredDateTime": "2026-06-10T13:41:42.513Z",
+      "lastReceivedDateTime": "2026-06-10T13:41:29.6870426Z",
+      "receivedCount": 1,
+      "rawPayload": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+          "essentials": {
+            "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/12345678-1234-1234-1234-1234567890ab",
+            "alertRule": "test-ResourceHealthAlertRule",
+            "severity": "Sev4",
+            "signalType": "Activity Log",
+            "monitorCondition": "Fired",
+            "monitoringService": "Resource Health",
+            "alertTargetIDs": [
+              "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.compute/virtualmachines/test-VM"
+            ],
+            "configurationItems": [
+              "test-VM"
+            ],
+            "originAlertId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb_123456789012345678901234567890ab",
+            "firedDateTime": "2026-06-10T13:41:42.513Z",
+            "description": "Alert rule description",
+            "essentialsVersion": "1.0",
+            "alertContextVersion": "1.0"
+          },
+          "alertContext": {
+            "channels": "Admin, Operation",
+            "correlationId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+            "eventSource": "ResourceHealth",
+            "eventTimestamp": "2026-06-10T13:41:42.513Z",
+            "eventDataId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+            "level": "Informational",
+            "operationName": "Microsoft.Resourcehealth/healthevent/Activated/action",
+            "operationId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+            "properties": {
+              "title": "Rebooted by user",
+              "details": null,
+              "currentHealthStatus": "Unavailable",
+              "previousHealthStatus": "Available",
+              "type": "Downtime",
+              "cause": "UserInitiated"
+            },
+            "status": "Active",
+            "submissionTimestamp": "2026-06-10T13:41:42.513Z",
+            "Activity Log Event Description": null
+          }
+        }
+      },
+      "caller": null
+    },
+    {
+      "id": "CARIAD-2026-004",
+      "deduplicationKey": "test-ServiceHealthAlertRule#/subscriptions/11111111-1111-1111-1111-111111111111",
+      "alertRule": "test-ServiceHealthAlertRule",
+      "severity": "Sev4",
+      "resourceId": "/subscriptions/11111111-1111-1111-1111-111111111111",
+      "resourceName": "11111111-1111-1111-1111-111111111111",
+      "operationName": "Microsoft.ServiceHealth/incident/action",
+      "description": "Alert rule description",
+      "originalFiredDateTime": "2026-06-10T14:10:40.913Z",
+      "lastReceivedDateTime": "2026-06-10T14:10:28.0647982Z",
+      "receivedCount": 1,
+      "rawPayload": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+          "essentials": {
+            "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/1234abcd5678efgh1234abcd5678efgh1234abcd5678efgh1234abcd5678efgh",
+            "alertRule": "test-ServiceHealthAlertRule",
+            "severity": "Sev4",
+            "signalType": "Activity Log",
+            "monitorCondition": "Fired",
+            "monitoringService": "ServiceHealth",
+            "alertTargetIDs": [
+              "/subscriptions/11111111-1111-1111-1111-111111111111"
+            ],
+            "originAlertId": "12345678-1234-1234-1234-1234567890ab",
+            "firedDateTime": "2026-06-10T14:10:40.913Z",
+            "description": "Alert rule description",
+            "essentialsVersion": "1.0",
+            "alertContextVersion": "1.0"
+          },
+          "alertContext": {
+            "authorization": null,
+            "channels": 1,
+            "claims": null,
+            "caller": null,
+            "correlationId": "12345678-abcd-efgh-ijkl-abcd12345678",
+            "eventSource": 2,
+            "eventTimestamp": "2026-06-10T14:10:40.913Z",
+            "httpRequest": null,
+            "eventDataId": "12345678-1234-1234-1234-1234567890ab",
+            "level": 3,
+            "operationName": "Microsoft.ServiceHealth/incident/action",
+            "operationId": "12345678-abcd-efgh-ijkl-abcd12345678",
+            "properties": {
+              "title": "Test Action Group - Test Service Health Alert",
+              "service": "Azure Service Name",
+              "region": "Global",
+              "communication": "\u003Cp\u003EThis is a test from Service Health Alert\u003C/p\u003E",
+              "incidentType": "Incident",
+              "trackingId": "TEST-TTT",
+              "impactStartTime": "2026-06-10T14:10:40.913Z",
+              "impactMitigationTime": "2026-06-10T14:10:40.913Z",
+              "impactedServices": [
+                {
+                  "ImpactedRegions": [
+                    {
+                      "RegionName": "Global"
+                    }
+                  ],
+                  "ServiceName": "Azure Service Name"
+                }
+              ],
+              "impactedServicesTableRows": "\u003Ctr\u003E\u003Ctd\u003EThis is a test from service health alert\u003C/\u003Ctd\u003E/\u003Ctr\u003E",
+              "defaultLanguageTitle": "Test Action Group - Test Service Health Alert",
+              "defaultLanguageContent": "\u003Cp\u003EThis is a test from Service Health Alert\u003C/p\u003E",
+              "stage": "Resolved",
+              "communicationId": "11223344556677",
+              "isHIR": "false",
+              "IsSynthetic": "True",
+              "impactType": "SubscriptionList",
+              "version": "0.1.1"
+            },
+            "status": "Resolved",
+            "subStatus": null,
+            "submissionTimestamp": "2026-06-10T14:10:40.913Z",
+            "ResourceType": null
+          }
+        }
+      },
+      "caller": null
+    },
+    {
+      "id": "CARIAD-2026-005",
+      "deduplicationKey": "test-SmartAlertRule#/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.insights/components/test-applicationInsights",
+      "alertRule": "test-SmartAlertRule",
+      "severity": "Sev4",
+      "resourceId": "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.insights/components/test-applicationInsights",
+      "resourceName": "test-applicationInsights",
+      "operationName": "unknown",
+      "description": "Dependency Latency Degradation notifies you of an unusual increase in response by a dependency your app is calling (e.g. REST API or database)",
+      "originalFiredDateTime": "2021-10-28T19:09:09.1115084Z",
+      "lastReceivedDateTime": "2026-06-10T14:11:08.5534330Z",
+      "receivedCount": 1,
+      "rawPayload": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+          "essentials": {
+            "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/12345678-1234-1234-1234-1234567890ab",
+            "alertRule": "test-SmartAlertRule",
+            "severity": "Sev4",
+            "signalType": "Log",
+            "monitorCondition": "Fired",
+            "monitoringService": "SmartDetector",
+            "alertTargetIDs": [
+              "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.insights/components/test-applicationInsights"
+            ],
+            "configurationItems": [
+              "test-applicationInsights"
+            ],
+            "originAlertId": "1234abcd5678efgh1234abcd5678efgh1234abcd5678efgh1234abcd5678efgh",
+            "firedDateTime": "2021-10-28T19:09:09.1115084Z",
+            "description": "Dependency Latency Degradation notifies you of an unusual increase in response by a dependency your app is calling (e.g. REST API or database)",
+            "essentialsVersion": "1.0",
+            "alertContextVersion": "1.0"
+          },
+          "alertContext": {
+            "DetectionSummary": "A degradation in the dependency duration over the last 24 hours",
+            "FormattedOccurrenceTime": "2026-06-10T14:11:20.819Z",
+            "DetectedValue": "0.45 sec",
+            "NormalValue": "0.27 sec (over the last 7 days)",
+            "PresentationInsightEventRequest": "/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/test-RG/providers/microsoft.insights/components/test-applicationInsights/query?query=systemEvents%0d%0a\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B%7c\u002Bwhere\u002Btimestamp\u002B%3e%3d\u002Bdatetime(%272021-10-27T23%3a29%3a59.0000000Z%27)\u002B%0d%0a\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B%7c\u002Bwhere\u002BitemType\u002B%3d%3d\u002B%27systemEvent%27\u002Band\u002Bname\u002B%3d%3d\u002B%27ProactiveDetectionInsight%27\u002B%0d%0a\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B%7c\u002Bwhere\u002Bdimensions.InsightType\u002B%3d%3d\u002B3\u002B%0d%0a\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B%7c\u002Bwhere\u002Bdimensions.InsightVersion\u002B%3d%3d\u002B%27SmartAlert%27%0d%0a\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B%7c\u002Bwhere\u002Bdimensions.InsightDocumentId\u002B%3d%3d\u002B%2712345678-abcd-1234-5678-abcd12345678%27\u002B%0d%0a\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B%7c\u002Bproject\u002Bdimensions.InsightPropertiesTable%2cdimensions.InsightDegradationChart%2cdimensions.InsightCountChart%2cdimensions.InsightLinksTable%0d%0a\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u002B\u0026api-version=2018-04-20",
+            "SmartDetectorId": "DependencyPerformanceDegradationDetector",
+            "SmartDetectorName": "Dependency Performance Degradation Detector",
+            "AnalysisTimestamp": "2026-06-10T14:11:20.819Z"
+          }
+        }
+      },
+      "caller": null
+    },
+    {
+      "id": "CARIAD-2026-006",
+      "deduplicationKey": "test-metricAlertRule#/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.storage/storageaccounts/test-storageAccount",
+      "alertRule": "test-metricAlertRule",
+      "severity": "Sev4",
+      "resourceId": "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.storage/storageaccounts/test-storageAccount",
+      "resourceName": "test-storageAccount",
+      "operationName": "unknown",
+      "description": "Alert rule description",
+      "originalFiredDateTime": "2026-06-10T14:13:59.298Z",
+      "lastReceivedDateTime": "2026-06-10T14:13:48.5412073Z",
+      "receivedCount": 1,
+      "rawPayload": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+          "essentials": {
+            "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/12345678-1234-1234-1234-1234567890ab",
+            "alertRule": "test-metricAlertRule",
+            "severity": "Sev4",
+            "signalType": "Metric",
+            "monitorCondition": "Fired",
+            "monitoringService": "Platform",
+            "alertTargetIDs": [
+              "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.storage/storageaccounts/test-storageAccount"
+            ],
+            "configurationItems": [
+              "test-storageAccount"
+            ],
+            "originAlertId": "11111111-1111-1111-1111-111111111111_test-RG_microsoft.insights_metricAlerts_test-metricAlertRule_1234567890",
+            "firedDateTime": "2026-06-10T14:13:59.298Z",
+            "description": "Alert rule description",
+            "essentialsVersion": "1.0",
+            "alertContextVersion": "1.0"
+          },
+          "alertContext": {
+            "properties": {
+              "customKey1": "value1",
+              "customKey2": "value2"
+            },
+            "conditionType": "SingleResourceMultipleMetricCriteria",
+            "condition": {
+              "windowSize": "PT5M",
+              "allOf": [
+                {
+                  "metricName": "Transactions",
+                  "metricNamespace": "Microsoft.Storage/storageAccounts",
+                  "operator": "GreaterThan",
+                  "threshold": "0",
+                  "timeAggregation": "Total",
+                  "dimensions": [
+                    {
+                      "name": "ApiName",
+                      "value": "GetBlob"
+                    }
+                  ],
+                  "metricValue": 100,
+                  "webTestName": null
+                }
+              ],
+              "windowStartTime": "2026-06-10T14:13:59.298Z",
+              "windowEndTime": "2026-06-10T14:13:59.298Z"
+            }
+          },
+          "customProperties": {
+            "customKey1": "value1",
+            "customKey2": "value2"
+          }
+        }
+      },
+      "caller": null
+    },
+    {
+      "id": "CARIAD-2026-007",
+      "deduplicationKey": "test-logAlertRule-v1-metricMeasurement#/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.operationalinsights/workspaces/test-logAnalyticsWorkspace",
+      "alertRule": "test-logAlertRule-v1-metricMeasurement",
+      "severity": "Sev4",
+      "resourceId": "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.operationalinsights/workspaces/test-logAnalyticsWorkspace",
+      "resourceName": "test-logAnalyticsWorkspace",
+      "operationName": "unknown",
+      "description": "Alert rule description",
+      "originalFiredDateTime": "2026-06-10T14:14:22.811Z",
+      "lastReceivedDateTime": "2026-06-10T14:14:29.5115823Z",
+      "receivedCount": 2,
+      "rawPayload": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+          "essentials": {
+            "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/12345678-1234-1234-1234-1234567890ab",
+            "alertRule": "test-logAlertRule-v1-metricMeasurement",
+            "severity": "Sev4",
+            "signalType": "Log",
+            "monitorCondition": "Fired",
+            "monitoringService": "Log Analytics",
+            "alertTargetIDs": [
+              "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.operationalinsights/workspaces/test-logAnalyticsWorkspace"
+            ],
+            "configurationItems": [],
+            "originAlertId": "12345678-4444-4444-4444-1234567890ab",
+            "firedDateTime": "2026-06-10T14:14:42.726Z",
+            "description": "Alert rule description",
+            "essentialsVersion": "1.0",
+            "alertContextVersion": "1.1"
+          },
+          "alertContext": {
+            "SearchQuery": "Heartbeat | summarize AggregatedValue=count() by bin(TimeGenerated, 5m)",
+            "SearchIntervalStartTimeUtc": "2026-06-10T14:14:42.726Z",
+            "SearchIntervalEndtimeUtc": "2026-06-10T14:14:42.726Z",
+            "ResultCount": 2,
+            "LinkToSearchResults": "https://portal.azure.com#@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/blade/Microsoft_Azure_Monitoring_Logs/LogsBlade/source/Alerts.EmailLinks/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2F11111111-1111-1111-1111-111111111111%2FresourceGroups%2Ftest-RG%2Fproviders%2FMicrosoft.OperationalInsights%2Fworkspaces%2Ftest-logAnalyticsWorkspace%22%7D%5D%7D/q/aBcDeFgHi%2BWqUSguzc1NLMqsSlVwTE8vSk1PLElNCUvMKU21Tc4vzSvRaBcDeFgHiaBcDeFgHiaBcDeFgHiaBcDeFgHi/prettify/1/timespan/2021-11-15T15%3a16%3a49.0000000Z%2f2021-11-16T15%3a16%3a49.0000000Z",
+            "LinkToFilteredSearchResultsUI": "https://portal.azure.com#@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/blade/Microsoft_Azure_Monitoring_Logs/LogsBlade/source/Alerts.EmailLinks/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2F11111111-1111-1111-1111-111111111111%2FresourceGroups%2Ftest-RG%2Fproviders%2FMicrosoft.OperationalInsights%2Fworkspaces%2Ftest-logAnalyticsWorkspace%22%7D%5D%7D/q/aBcDeFgHiaBcDeFgHiaBcDeFgHiaBcDeFgHiaBcDeFgHidp%2BOPOhDKsHR%2FFeJXsTgzGJRmVui3KF3RpLyEJCX9A2iMl6jgxMn6jRevng3JmIHLdYtKP4DRI9mhc%3D/prettify/1/timespan/2021-11-15T15%3a16%3a49.0000000Z%2f2021-11-16T15%3a16%3a49.0000000Z",
+            "LinkToSearchResultsAPI": "https://api.loganalytics.io/v1/workspaces/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/query?query=Heartbeat%20%0A%7C%20summarize%20AggregatedValue%3Dcount%28%29%20by%20bin%28TimeGenerated%2C%205m%29\u0026timespan=2021-11-15T15%3a16%3a49.0000000Z%2f2021-11-16T15%3a16%3a49.0000000Z",
+            "LinkToFilteredSearchResultsAPI": "https://api.loganalytics.io/v1/workspaces/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/query?query=Heartbeat%20%0A%7C%20summarize%20AggregatedValue%3Dcount%28%29%20by%20bin%28TimeGenerated%2C%205m%29%7C%20where%20todouble%28AggregatedValue%29%20%3E%200\u0026timespan=2021-11-15T15%3a16%3a49.0000000Z%2f2021-11-16T15%3a16%3a49.0000000Z",
+            "SeverityDescription": "Informational",
+            "WorkspaceId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+            "SearchIntervalDurationMin": "1440",
+            "AffectedConfigurationItems": [],
+            "AlertType": "Metric measurement",
+            "IncludeSearchResults": true,
+            "Dimensions": [],
+            "SearchIntervalInMinutes": "1440",
+            "SearchResults": {
+              "tables": [
+                {
+                  "name": "PrimaryResult",
+                  "columns": [
+                    {
+                      "name": "TimeGenerated",
+                      "type": "datetime"
+                    },
+                    {
+                      "name": "AggregatedValue",
+                      "type": "long"
+                    }
+                  ],
+                  "rows": [
+                    [
+                      "2026-06-10T14:14:42.726Z",
+                      11
+                    ],
+                    [
+                      "2026-06-10T14:14:42.726Z",
+                      11
+                    ]
+                  ]
+                }
+              ],
+              "dataSources": [
+                {
+                  "resourceId": "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.operationalinsights/workspaces/test-logAnalyticsWorkspace",
+                  "region": "eastus",
+                  "tables": [
+                    "Heartbeat"
+                  ]
+                }
+              ]
+            },
+            "Threshold": 0,
+            "Operator": "Greater Than",
+            "IncludedSearchResults": "True"
+          }
+        }
+      },
+      "caller": null
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "PowerShell(netstat *)",
+      "Read(//c/Users/s.mirzaeiaraghi/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/.claude/skills/ui-ux-pro-max/**)",
+      "Bash(python3 scripts/search.py \"aiops observability devops SaaS dashboard monitoring dark modern\" --design-system -p \"AIOps Platform\" -f markdown)",
+      "PowerShell(python \"C:\\\\Users\\\\s.mirzaeiaraghi\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\src\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"aiops observability devops saas dashboard monitoring dark modern\" --design-system -p \"AIOps Platform\" -f markdown 2>&1 | Select-Object -First 120)",
+      "PowerShell(python \"C:\\\\Users\\\\s.mirzaeiaraghi\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\src\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"saas dashboard monitoring\" --domain color -n 3 2>&1; python \"C:\\\\Users\\\\s.mirzaeiaraghi\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\src\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"data density sidebar navigation status\" --domain ux -n 4 2>&1)",
+      "PowerShell(python \"C:\\\\Users\\\\s.mirzaeiaraghi\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\src\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"settings forms profile preferences saas admin\" --domain ux -n 5 2>&1)",
+      "Bash(Get-ChildItem -Path \"c:\\\\src\\\\ai-observability\" -Recurse -Directory -Name)",
+      "Bash(Select-Object -First 30)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\src\\\\ai-observability\\\\src\\\\backend\\\\AiObservability.Api\" -Recurse -File | Where-Object { $_.Extension -eq '.cs' -or $_.Extension -eq '.csproj' } | Select-Object -ExpandProperty FullName | Sort-Object)",
+      "mcp__claude_ai_Microsoft_Learn__microsoft_docs_search",
+      "Bash(findstr /i data)",
+      "Bash(Remove-Item *)",
+      "PowerShell(New-Item *)",
+      "Bash(dotnet build *)",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(npm list *)",
+      "Bash(gh api *)"
+    ]
+  }
+}

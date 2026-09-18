@@ -1,0 +1,16 @@
+export const qk = {
+  dashboard: ['dashboard'] as const,
+  incidents: (filters?: object) => ['incidents', filters] as const,
+  incident: (id: string) => ['incidents', id] as const,
+  alerts: (filters?: object) => ['alerts', filters] as const,
+  sources: ['sources'] as const,
+  analytics: ['analytics'] as const,
+  costs: ['costs'] as const,
+  pipelineRuns: ['pipeline', 'runs'] as const,
+  pipelineRun: (id: string) => ['pipeline', 'runs', id] as const,
+  runbooks: (q?: string) => ['knowledge', 'runbooks', q] as const,
+  services: ['services'] as const,
+  serviceDetail: (id: string) => ['services', id] as const,
+  agents: ['agents'] as const,
+  settings: ['settings'] as const,
+};
